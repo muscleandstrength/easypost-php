@@ -1,7 +1,7 @@
 {
   "name": "easypost/easypost-php",
   "description": "EasyPost Shipping API Client Library for PHP",
-  "version": "5.7.0",
+  "version": "5.8.0",
   "keywords": [
     "shipping",
     "api",
@@ -20,7 +20,8 @@
   "require": {
     "ext-curl": "*",
     "ext-json": "*",
-    "php": ">=7.3"
+    "php": ">=7.3",
+    "psr/log": "^3.0.0"
   },
   "require-dev": {
     "allejo/php-vcr-sanitizer": "^1.0.9",

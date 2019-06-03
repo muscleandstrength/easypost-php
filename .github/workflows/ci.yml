@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        phpversion: ["7.3", "7.4", "8.0", "8.1"]
+        phpversion: ["8.1"]
     steps:
       - uses: actions/checkout@v3
       - name: set up php

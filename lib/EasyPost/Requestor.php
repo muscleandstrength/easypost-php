@@ -176,6 +176,9 @@ class Requestor
 
         list($httpBody, $httpStatus) = $this->curlRequest($method, $absUrl, $headers, $params);
 
+        EasyPost::getLogger()->debug($httpStatus);
+        EasyPost::getLogger()->debug($httpBody);
+
         return [$httpBody, $httpStatus, $myApiKey];
     }
 
@@ -239,6 +242,9 @@ class Requestor
         }
 
         curl_setopt_array($curl, $curlOptions);
+
+        EasyPost::getLogger()->debug(print_r($curlOptions, true));
+
         $httpBody = curl_exec($curl);
 
         $errorNum = curl_errno($curl);
@@ -321,6 +327,7 @@ class Requestor
     public function handleCurlError($errorNum, $message)
     {
         $apiBase = EasyPost::$apiBase;
+        EasyPost::getLogger()->debug($errorNum . ': ' . $message);
 
         switch ($errorNum) {
             case CURLE_COULDNT_CONNECT:

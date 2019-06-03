@@ -2,6 +2,9 @@
 
 namespace EasyPost;
 
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
+
 abstract class EasyPost
 {
     /**
@@ -49,6 +52,11 @@ abstract class EasyPost
      * @var int|null
      */
     public static $responseTimeout = 60000;
+
+    /**
+     * @var LoggerInterface
+     */
+    public static $logger;
 
     /**
      * The version of this PHP client library.
@@ -163,5 +171,19 @@ abstract class EasyPost
     public static function setResponseTimeout($responseTimeout)
     {
         self::$responseTimeout = $responseTimeout;
+    }
+
+    public static function getLogger(): LoggerInterface
+    {
+        if (! self::$logger instanceof LoggerInterface) {
+            self::$logger = new NullLogger();
+        }
+
+        return self::$logger;
+    }
+
+    public static function setLogger(LoggerInterface $logger): void
+    {
+        self::$logger = $logger;
     }
 }
