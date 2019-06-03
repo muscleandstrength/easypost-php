@@ -163,7 +163,8 @@ class Requestor
             $headers[] = 'EasyPost-Version: ' . EasyPost::$apiVersion;
         }
         list($httpBody, $httpStatus) = $this->_curlRequest($method, $absUrl, $headers, $params, $myApiKey);
-
+        EasyPost::getLogger()->debug($httpStatus);
+        EasyPost::getLogger()->debug($httpBody);
         return array($httpBody, $httpStatus, $myApiKey);
     }
 
@@ -221,9 +222,13 @@ class Requestor
         }
 
         curl_setopt_array($curl, $curlOptions);
+
+        EasyPost::getLogger()->debug($curlOptions);
+
         $httpBody = curl_exec($curl);
 
         $errorNum = curl_errno($curl);
+
         if ($errorNum == CURLE_SSL_CACERT || $errorNum == CURLE_SSL_PEER_CERTIFICATE || $errorNum == 77) {
           curl_setopt($curl, CURLOPT_CAINFO, dirname(__FILE__) . '/../cacert.pem');
           $httpBody = curl_exec($curl);
@@ -284,6 +289,8 @@ class Requestor
     public function handleCurlError($errorNum, $message)
     {
         $apiBase = EasyPost::$apiBase;
+        EasyPost::getLogger()->debug($errorNum . ': ' . $message);
+
         switch ($errorNum) {
             case CURLE_COULDNT_CONNECT:
             case CURLE_COULDNT_RESOLVE_HOST:
